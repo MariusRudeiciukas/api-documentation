@@ -1,110 +1,15 @@
 ---
 swagger: "2.0"
 info:
-  version: "2019-01-14T12:20:42Z"
-  title: "Reserve & Collect (sls) - V1 Marius Test"
-  description: API for Reserve & Collect handling
+  version: "2023-02-03T12:20:42Z"
+  title: "Reserve & Collect (sls) Marius V1 Test"
 host: "api.dufry.cloud"
 basePath: "/u"
 schemes:
 - "https"
 paths:
-  /v2/login:
-    options:
-      responses:
-        200:
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-          headers:
-            Access-Control-Allow-Origin:
-              type: "string"
-            Access-Control-Allow-Methods:
-              type: "string"
-            Access-Control-Allow-Headers:
-              type: "string"
-      x-amazon-apigateway-integration:
-        responses:
-          default:
-            statusCode: "200"
-            responseParameters:
-              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type'"
-              method.response.header.Access-Control-Allow-Origin: "'*'"
-        requestTemplates:
-          application/json: |
-            { "statusCode": 200 }
-        passthroughBehavior: "when_no_match"
-        type: "mock"
-    post:
-      tags:
-      - "authenticate"
-      description: API to authenticate a user
-      consumes:
-        - application/json
-      produces:
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "user"
-        description: "User credentials information"
-        required: false
-        schema:
-          $ref: "#/definitions/UserCredentials"
-      responses:
-        "200":
-          description: "authenticated"
-          headers:
-            Access-Control-Allow-Origin:
-              type: "string"
-        "400":
-          description: "failed"
-          headers:
-            Access-Control-Allow-Origin:
-              type: "string"
-        "401":
-          description: "failed"
-          headers:
-            Access-Control-Allow-Origin:
-              type: "string"
-        "500":
-          description: "failed"
-          headers:
-            Access-Control-Allow-Origin:
-              type: "string"
-      x-amazon-apigateway-request-validator: "Validate all"
-      x-amazon-apigateway-integration:
-        uri: "${aws-lambda-arn-template}:${name-lambda-login}-${stage}/invocations"
-        passthroughBehavior: "when_no_match"
-        responses:
-          default:
-            statusCode: "200"
-            responseParameters:
-              method.response.header.Access-Control-Allow-Origin: "'*'"
-          "400.*":
-            statusCode: "400"
-            responseTemplates:
-              "application/json": |
-                ${response-error-mapping}
-          "401.*":
-            statusCode: "401"
-            responseTemplates:
-              "application/json": |
-                ${response-error-mapping}
-          "500.*":
-            statusCode: "500"
-            responseTemplates:
-              "application/json": |
-                ${response-error-mapping}
-        httpMethod: "POST"
-        type: "aws"
-  /v2/{store_identifier}/creditmemos:
+  /v1/{store_identifier}/creditmemos:
     get:
-      description: |
-        After a customer places and pays for an order and an invoice has
-        been issued, the merchant can create a credit memo to refund all or part
-        of the amount paid for any returned or undelivered items. The memo restores
-        funds to the customer account so that the customer can make future purchases.
       produces:
       - "application/json"
       parameters:
@@ -130,7 +35,7 @@ paths:
           schema:
             $ref: "#/definitions/Empty"
       security:
-      - Authorizer: []
+      - AuthorizerV1: []
       x-amazon-apigateway-request-validator: "Validate all"
       x-amazon-apigateway-integration:
         uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
@@ -141,36 +46,29 @@ paths:
         httpMethod: "POST"
         contentHandling: "CONVERT_TO_TEXT"
         type: "aws_proxy"
-  /v2/{store_identifier}/invoices:
+  /v1/{store_identifier}/invoices:
     get:
-      description: |
-        Retrieves information from Invoices
-        An invoice is a record of the receipt of payment for an order.
+      description: "Retrieves information from Invoices"
       produces:
       - "application/json"
       parameters:
       - name: "store_identifier"
-        description: "Store ID"
         in: "path"
         required: false
         type: "string"
       - name: "created_at"
-        description: "Query filter by date of payment"
         in: "query"
         required: true
         type: "string"
       - name: "page"
-        description: "Query page number"
         in: "query"
         required: false
         type: "string"
       - name: "pagesize"
-        description: "Query page size. Default value 10"
         in: "query"
         required: false
         type: "string"
       - name: "Authorization"
-        description: "Access token for authorization"
         in: "header"
         required: false
         type: "string"
@@ -194,7 +92,7 @@ paths:
         406:
           description: "406 response"
       security:
-      - Authorizer: []
+      - AuthorizerV1: []
       x-amazon-apigateway-request-validator: "Validate all"
       x-amazon-apigateway-integration:
         uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
@@ -205,7 +103,64 @@ paths:
         httpMethod: "POST"
         contentHandling: "CONVERT_TO_TEXT"
         type: "aws_proxy"
-  /v2/{store_identifier}/shipments:
+  /v1/{store_identifier}/sap/invoices:
+    get:
+      description: "Retrieves information from Invoices"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "store_identifier"
+        in: "path"
+        required: false
+        type: "string"
+      - name: "created_at"
+        in: "query"
+        required: true
+        type: "string"
+      - name: "page"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "pagesize"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "Authorization"
+        in: "header"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+        400:
+          description: "400 response"
+        500:
+          description: "500 response"
+        401:
+          description: "401 response"
+        403:
+          description: "403 response"
+        404:
+          description: "404 response"
+        405:
+          description: "405 response"
+        406:
+          description: "406 response"
+      security:
+      - AuthorizerV1: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
+  /v1/{store_identifier}/shipments:
     get:
       description: "Retrieves information from shipments"
       produces:
@@ -251,7 +206,7 @@ paths:
         406:
           description: "406 response"
       security:
-      - Authorizer: []
+      - AuthorizerV1: []
       x-amazon-apigateway-request-validator: "Validate all"
       x-amazon-apigateway-integration:
         uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
@@ -262,31 +217,16 @@ paths:
         httpMethod: "POST"
         contentHandling: "CONVERT_TO_TEXT"
         type: "aws_proxy"
-  /v2/{store_identifier}/order/{id}/invoice:
+  /v1/{store_identifier}/order/{id}/invoice:
     post:
-      description: |
-        Place invoicing action. Used by PoS for payment post
-        Example: {
-          "items": [ {
-            "order_item_id": 0,    //order item id
-            "qty": 0               //item quantities invoiced
-          } ],
-          "notify": true,          //notify to customer flag
-          "appendComment": true,   //add comment to invoice entity
-          "comment": {
-            "comment": "string",   //comment text
-          }
-        }
       produces:
       - "application/json"
       parameters:
       - name: "store_identifier"
-        description: "Store ID"
         in: "path"
         required: false
         type: "string"
       - name: "Authorization"
-        description: "Access token for authorization"
         in: "header"
         required: false
         type: "string"
@@ -314,7 +254,7 @@ paths:
         406:
           description: "406 response"
       security:
-      - Authorizer: []
+      - AuthorizerV1: []
       x-amazon-apigateway-request-validator: "Validate all"
       x-amazon-apigateway-integration:
         uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
@@ -325,37 +265,20 @@ paths:
         httpMethod: "POST"
         contentHandling: "CONVERT_TO_TEXT"
         type: "aws_proxy"
-  /v2/{store_identifier}/order/{id}/ship:
+  /v1/{store_identifier}/order/{id}/ship:
     post:
-      description: |
-        Place shipping/picking action. Used by warehouse or store staff
-        for picking register
-        Example: {
-          "items": [ {
-            "order_item_id": 0,    //order item id, not SKU
-            "qty": 0               //qty to be marked as shipped
-          } ],
-          "notify": true,          //notify to customer flag
-          "appendComment": true,   //append comment to shipment flag
-          "comment": {
-            "comment": "string",   //comment text
-          }
-        }
       produces:
       - "application/json"
       parameters:
       - name: "store_identifier"
-        description: "Store ID"
         in: "path"
         required: false
         type: "string"
       - name: "Authorization"
-        description: "Access token for authorization"
         in: "header"
         required: false
         type: "string"
       - name: "id"
-        description: "Order Id to be updated"
         in: "path"
         required: true
         type: "string"
@@ -379,7 +302,7 @@ paths:
         406:
           description: "406 response"
       security:
-      - Authorizer: []
+      - AuthorizerV1: []
       x-amazon-apigateway-request-validator: "Validate all"
       x-amazon-apigateway-integration:
         uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
@@ -390,43 +313,28 @@ paths:
         httpMethod: "POST"
         contentHandling: "CONVERT_TO_TEXT"
         type: "aws_proxy"
-  /v2/{store_identifier}/orders:
+  /v1/{store_identifier}/orders:
     get:
-      description: |
-        List orders by date, status or store
-        An order is a document that a web store issues to a customer.
-        Magento generates a sales order that lists the product items, billing and
-        shipping addresses, and shipping and payment methods.
       produces:
       - "application/json"
       parameters:
       - name: "store"
-        description: "Query filter orders by store"
         in: "query"
         required: false
         type: "string"
       - name: "created_at"
-        description: "Query filter orders by date"
         in: "query"
         required: false
         type: "string"
       - name: "pagesize"
-        description: "Query filter page size"
         in: "query"
         required: false
         type: "string"
-      - name: "Authorization"
-        description: "Access token for authorization"
-        in: "header"
-        required: true
-        type: "string"
       - name: "store_identifier"
-        description: "Store ID"
         in: "path"
         required: false
         type: "string"
       - name: "status"
-        description: "Query filter orders by status"
         in: "query"
         required: true
         type: "string"
@@ -436,7 +344,6 @@ paths:
         required: false
         type: "string"
       - name: "page"
-        description: "Query filter page"
         in: "query"
         required: false
         type: "string"
@@ -460,7 +367,7 @@ paths:
         406:
           description: "406 response"
       security:
-      - Authorizer: []
+      - AuthorizerV1: []
       x-amazon-apigateway-request-validator: "Validate all"
       x-amazon-apigateway-integration:
         uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
@@ -471,7 +378,7 @@ paths:
         httpMethod: "POST"
         contentHandling: "CONVERT_TO_TEXT"
         type: "aws_proxy"
-  /v2/{store_identifier}/orders/{id}:
+  /v1/{store_identifier}/orders/{id}:
     get:
       description: |
         Retrieves information for one order
@@ -481,6 +388,21 @@ paths:
       - name: "store_identifier"
         description: "Store ID"
         in: "path"
+        required: false
+        type: "string"
+      - name: "created_at"
+        description: "Query filter by date of payment"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "page"
+        description: "Query page number"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "pagesize"
+        description: "Query page size. Default value 10"
+        in: "query"
         required: false
         type: "string"
       - name: "Authorization"
@@ -493,57 +415,15 @@ paths:
         in: "path"
         required: true
         type: "string"
-      responses:
-        200:
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-        400:
-          description: "400 response"
-        500:
-          description: "500 response"
-        401:
-          description: "401 response"
-        403:
-          description: "403 response"
-        404:
-          description: "404 response"
-        405:
-          description: "405 response"
-        406:
-          description: "406 response"
-      security:
-      - Authorizer: []
-      x-amazon-apigateway-request-validator: "Validate all"
-      x-amazon-apigateway-integration:
-        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
-        responses:
-          default:
-            statusCode: "200"
-        passthroughBehavior: "when_no_match"
-        httpMethod: "POST"
-        contentHandling: "CONVERT_TO_TEXT"
-        type: "aws_proxy"
-  /v2/{store_identifier}/orders/{id}/cancel:
-    post:
-      description: "Cancel an order if it is impossible to serve. No body is needed"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "store_identifier"
-        description: "Store ID"
-        in: "path"
+      - name: "is_external"
+        description: "Id is an external one"
+        in: "query"
         required: false
         type: "string"
-      - name: "Authorization"
-        description: "Access token for authorization"
-        in: "header"
+      - name: "is_entity_id"
+        description: "Id is entity id"
+        in: "query"
         required: false
-        type: "string"
-      - name: "id"
-        description: "Order Id retrieved from order listing"
-        in: "path"
-        required: true
         type: "string"
       responses:
         200:
@@ -565,7 +445,7 @@ paths:
         406:
           description: "406 response"
       security:
-      - Authorizer: []
+      - AuthorizerV1: []
       x-amazon-apigateway-request-validator: "Validate all"
       x-amazon-apigateway-integration:
         uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
@@ -576,29 +456,16 @@ paths:
         httpMethod: "POST"
         contentHandling: "CONVERT_TO_TEXT"
         type: "aws_proxy"
-  /v2/{store_identifier}/orders/{id}/comments:
+  /v1/{store_identifier}/orders/{id}/cancel:
     post:
-      description: |
-        Add a comment to order history and change status
-        Example: {
-          "statusHistory": {
-            "comment": "string",
-            "entity_id": 0,              //Order identifier
-            "is_customer_notified": 0,
-            "is_visible_on_front": 0,
-            "status": "string"           //Can be one of this [wh_processing|ready_to_collect|shipped]
-          }
-        }
       produces:
       - "application/json"
       parameters:
       - name: "store_identifier"
-        description: "Store ID"
         in: "path"
         required: false
         type: "string"
       - name: "Authorization"
-        description: "Access token for authorization"
         in: "header"
         required: false
         type: "string"
@@ -626,7 +493,7 @@ paths:
         406:
           description: "406 response"
       security:
-      - Authorizer: []
+      - AuthorizerV1: []
       x-amazon-apigateway-request-validator: "Validate all"
       x-amazon-apigateway-integration:
         uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
@@ -637,235 +504,68 @@ paths:
         httpMethod: "POST"
         contentHandling: "CONVERT_TO_TEXT"
         type: "aws_proxy"
-  /v2/pim/categories:
+  /v1/{store_identifier}/orders/{id}/comments:
+    post:
+      produces:
+      - "application/json"
+      parameters:
+      - name: "store_identifier"
+        in: "path"
+        required: false
+        type: "string"
+      - name: "Authorization"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+        400:
+          description: "400 response"
+        500:
+          description: "500 response"
+        401:
+          description: "401 response"
+        403:
+          description: "403 response"
+        404:
+          description: "404 response"
+        405:
+          description: "405 response"
+        406:
+          description: "406 response"
+      security:
+      - AuthorizerV1: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
+  /v1/{store_identifier}/pim/categories:
     get:
-      description: "Interface to retrieves category collection information"
       produces:
       - "application/json"
       parameters:
+      - name: "updated"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "store_identifier"
+        in: "path"
+        required: false
+        type: "string"
       - name: "parentid"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "startkey"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "pagesize"
-        in: "query"
-        required: false
-        type: "string"
-      responses:
-        200:
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-      security:
-      - Authorizer: []
-      x-amazon-apigateway-request-validator: "Validate all"
-      x-amazon-apigateway-integration:
-        uri: "${action-dynamodb-arn-template}/Scan"
-        credentials: "${credentials-proxy-dynamodb-readwrite}-${stage}"
-        responses:
-          default:
-            statusCode: "200"
-        requestTemplates:
-          application/json: |
-            {
-              "TableName": "${stage}-${tableName-category}"
-              #if ($input.params('parentid')!='')
-                , "FilterExpression" : "parent = :parent" 
-              #end
-
-              #if ($input.params('parentid')!='')
-                , "ExpressionAttributeValues": {
-                  ":parent": { "S": "$input.params('parentid')" }
-                }
-              #end
-              #if ($input.params('pagesize')!='')
-                , "Limit": $input.params('pagesize')
-              #end
-
-              #if ($input.params('startkey')!='')
-                , "ExclusiveStartKey": { $input.params('startkey') }
-              #end
-            }
-        passthroughBehavior: "when_no_match"
-        httpMethod: "POST"
-        contentHandling: "CONVERT_TO_TEXT"
-        type: "aws"
-  /v2/pim/categories/{categoryid}:
-    get:
-      description: "Interface to retrieves one category information"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "categoryid"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "pagesize"
-        in: "query"
-        required: false
-        type: "string"
-      responses:
-        200:
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-      security:
-      - Authorizer: []
-      x-amazon-apigateway-request-validator: "Validate all"
-      x-amazon-apigateway-integration:
-        uri: "${action-dynamodb-arn-template}/Query"
-        credentials: "${credentials-proxy-dynamodb-readwrite}-${stage}"
-        responses:
-          default:
-            statusCode: "200"
-        requestTemplates:
-          application/json: |
-            {
-                "TableName": "${stage}-${tableName-category}",
-                "KeyConditionExpression": "code = :categoryid",
-                
-                "ExpressionAttributeValues": {
-                    ":categoryid": { "S": "$input.params('categoryid')" }
-                }
-            }
-        passthroughBehavior: "when_no_match"
-        httpMethod: "POST"
-        cacheNamespace: "e47ooi"
-        cacheKeyParameters:
-        - "method.request.path.categoryid"
-        contentHandling: "CONVERT_TO_TEXT"
-        type: "aws"
-  /v2/pim/products:
-    get:
-      description: "Interface to retrieves product collections information"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "updated"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "erp"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "item_code"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "page"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "pagesize"
-        in: "query"
-        required: false
-        type: "string"
-      responses:
-        200:
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-      security:
-      - Authorizer: []
-      x-amazon-apigateway-request-validator: "Validate all"
-      x-amazon-apigateway-integration:
-        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
-        responses:
-          default:
-            statusCode: "200"
-        passthroughBehavior: "when_no_match"
-        httpMethod: "POST"
-        contentHandling: "CONVERT_TO_TEXT"
-        type: "aws_proxy"
-  /v2/pim/products/{productid+}:
-    get:
-      description: "Interface to retrieves one product information"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "productid"
-        in: "path"
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-      security:
-      - Authorizer: []
-      x-amazon-apigateway-request-validator: "Validate all"
-      x-amazon-apigateway-integration:
-        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
-        responses:
-          default:
-            statusCode: "200"
-        passthroughBehavior: "when_no_match"
-        httpMethod: "POST"
-        cacheNamespace: "xfkulm"
-        cacheKeyParameters:
-        - "method.request.path.productid"
-        contentHandling: "CONVERT_TO_TEXT"
-        type: "aws_proxy"
-  /v2/forum/products:
-    get:
-      description: "Interface to retrieves product collections information for forum"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "updated"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "erp"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "item_code"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "page"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "pagesize"
-        in: "query"
-        required: false
-        type: "string"
-      responses:
-        200:
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-      security:
-      - Authorizer: []
-      x-amazon-apigateway-request-validator: "Validate all"
-      x-amazon-apigateway-integration:
-        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
-        responses:
-          default:
-            statusCode: "200"
-        passthroughBehavior: "when_no_match"
-        httpMethod: "POST"
-        contentHandling: "CONVERT_TO_TEXT"
-        type: "aws_proxy"
-  /v2/{store_identifier}/pim/categories:
-    get:
-      description: "Interface to retrieves category collection information"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "updated"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "store_identifier"
         in: "path"
         required: false
         type: "string"
@@ -883,21 +583,19 @@ paths:
           schema:
             $ref: "#/definitions/Empty"
       security:
-      - Authorizer: []
+      - AuthorizerV1: []
       x-amazon-apigateway-request-validator: "Validate all"
       x-amazon-apigateway-integration:
-        uri: "${action-dynamodb-arn-template}/Scan"      
-        credentials: "${credentials-proxy-dynamodb-readwrite}-${stage}"
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
         responses:
           default:
             statusCode: "200"
         passthroughBehavior: "when_no_match"
         httpMethod: "POST"
         contentHandling: "CONVERT_TO_TEXT"
-        type: "aws"
-  /v2/{store_identifier}/pim/categories/{categoryid+}:
+        type: "aws_proxy"
+  /v1/{store_identifier}/pim/categories/{categoryid+}:
     get:
-      description: "Interface to retrieves one category information"
       produces:
       - "application/json"
       parameters:
@@ -914,12 +612,9 @@ paths:
           description: "200 response"
           schema:
             $ref: "#/definitions/Empty"
-      security:
-      - Authorizer: []
       x-amazon-apigateway-request-validator: "Validate all"
       x-amazon-apigateway-integration:
-        uri: "${action-dynamodb-arn-template}/Scan"
-        credentials: "${credentials-proxy-dynamodb-readwrite}-${stage}"
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
         responses:
           default:
             statusCode: "200"
@@ -929,10 +624,9 @@ paths:
         cacheKeyParameters:
         - "method.request.path.categoryid"
         contentHandling: "CONVERT_TO_TEXT"
-        type: "aws"
-  /v2/{store_identifier}/pim/products:
+        type: "aws_proxy"
+  /v1/{store_identifier}/pim/products:
     get:
-      description: "Interface to retrieves product collections information"
       produces:
       - "application/json"
       parameters:
@@ -944,14 +638,6 @@ paths:
         in: "path"
         required: false
         type: "string"
-      - name: "erp"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "item_code"
-        in: "query"
-        required: false
-        type: "string"
       - name: "page"
         in: "query"
         required: false
@@ -960,21 +646,13 @@ paths:
         in: "query"
         required: false
         type: "string"
-      - name: "pagination_type"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "search_after"
-        in: "query"
-        required: false
-        type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Empty"
       security:
-      - Authorizer: []
+      - AuthorizerV1: []
       x-amazon-apigateway-request-validator: "Validate all"
       x-amazon-apigateway-integration:
         uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
@@ -985,40 +663,8 @@ paths:
         httpMethod: "POST"
         contentHandling: "CONVERT_TO_TEXT"
         type: "aws_proxy"
-  /v2/{store_identifier}/forum/url:
+  /v1/{store_identifier}/pim/products/{productid+}:
     get:
-      description: "Interface to retrieves url information for product"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "local_code"
-        in: "query"
-        required: true
-        type: "string"
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      responses:
-        200:
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-      security:
-      - Authorizer: []
-      x-amazon-apigateway-request-validator: "Validate all"
-      x-amazon-apigateway-integration:
-        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
-        responses:
-          default:
-            statusCode: "200"
-        passthroughBehavior: "when_no_match"
-        httpMethod: "POST"
-        contentHandling: "CONVERT_TO_TEXT"
-        type: "aws_proxy"
-  /v2/{store_identifier}/pim/products/{productid+}:
-    get:
-      description: "Interface to retrieves one product information"
       produces:
       - "application/json"
       parameters:
@@ -1036,7 +682,7 @@ paths:
           schema:
             $ref: "#/definitions/Empty"
       security:
-      - Authorizer: []
+      - AuthorizerV1: []
       x-amazon-apigateway-request-validator: "Validate all"
       x-amazon-apigateway-integration:
         uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
@@ -1050,54 +696,7 @@ paths:
         - "method.request.path.productid"
         contentHandling: "CONVERT_TO_TEXT"
         type: "aws_proxy"
-  /v2/{store_identifier}/forum/products:
-    get:
-      description: "Interface to retrieves product collections information for forum"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "updated"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "erp"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "item_code"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "page"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "pagesize"
-        in: "query"
-        required: false
-        type: "string"
-      responses:
-        200:
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-      security:
-      - Authorizer: []
-      x-amazon-apigateway-request-validator: "Validate all"
-      x-amazon-apigateway-integration:
-        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
-        responses:
-          default:
-            statusCode: "200"
-        passthroughBehavior: "when_no_match"
-        httpMethod: "POST"
-        contentHandling: "CONVERT_TO_TEXT"
-        type: "aws_proxy"
-  /v2/{store_identifier}/promotions:
+  /v1/{store_identifier}/promotions:
     get:
       produces:
       - "application/json"
@@ -1112,7 +711,7 @@ paths:
           schema:
             $ref: "#/definitions/Empty"
       security:
-      - Authorizer: []
+      - AuthorizerV1: []
       x-amazon-apigateway-request-validator: "Validate all"
       x-amazon-apigateway-integration:
         uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
@@ -1123,7 +722,7 @@ paths:
         httpMethod: "POST"
         contentHandling: "CONVERT_TO_TEXT"
         type: "aws_proxy"
-  /v2/{store_identifier}/reserve:
+  /v1/{store_identifier}/reserve:
     post:
       description: "Interface to create a guest basket"
       produces:
@@ -1139,7 +738,7 @@ paths:
           schema:
             $ref: "#/definitions/Empty"
       security:
-      - Authorizer: []
+      - AuthorizerV1: []
       x-amazon-apigateway-request-validator: "Validate all"
       x-amazon-apigateway-integration:
         uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
@@ -1165,7 +764,7 @@ paths:
           schema:
             $ref: "#/definitions/Empty"
       security:
-      - Authorizer: []
+      - AuthorizerV1: []
       x-amazon-apigateway-request-validator: "Validate all"
       x-amazon-apigateway-integration:
         uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
@@ -1176,7 +775,7 @@ paths:
         httpMethod: "POST"
         contentHandling: "CONVERT_TO_TEXT"
         type: "aws_proxy"
-  /v2/{store_identifier}/reserve/{cart+}:
+  /v1/{store_identifier}/reserve/{cart+}:
     get:
       description: "Interface to retrieve basket information"
       produces:
@@ -1196,7 +795,7 @@ paths:
           schema:
             $ref: "#/definitions/Empty"
       security:
-      - Authorizer: []
+      - AuthorizerV1: []
       x-amazon-apigateway-request-validator: "Validate all"
       x-amazon-apigateway-integration:
         uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
@@ -1229,7 +828,7 @@ paths:
           schema:
             $ref: "#/definitions/Empty"
       security:
-      - Authorizer: []
+      - AuthorizerV1: []
       x-amazon-apigateway-request-validator: "Validate all"
       x-amazon-apigateway-integration:
         uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
@@ -1262,7 +861,7 @@ paths:
           schema:
             $ref: "#/definitions/Empty"
       security:
-      - Authorizer: []
+      - AuthorizerV1: []
       x-amazon-apigateway-request-validator: "Validate all"
       x-amazon-apigateway-integration:
         uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
@@ -1295,7 +894,7 @@ paths:
           schema:
             $ref: "#/definitions/Empty"
       security:
-      - Authorizer: []
+      - AuthorizerV1: []
       x-amazon-apigateway-request-validator: "Validate all"
       x-amazon-apigateway-integration:
         uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
@@ -1309,7 +908,7 @@ paths:
         - "method.request.path.cart"
         contentHandling: "CONVERT_TO_TEXT"
         type: "aws_proxy"
-  /v2/{store_identifier}/invoices/picked:
+  /v1/{store_identifier}/invoices/picked:
     get:
       description: "Retrieves information from picked orders"
       produces:
@@ -1355,7 +954,7 @@ paths:
         406:
           description: "406 response"
       security:
-      - Authorizer: []
+      - AuthorizerV1: []
       x-amazon-apigateway-request-validator: "Validate all"
       x-amazon-apigateway-integration:
         uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
@@ -1366,123 +965,8 @@ paths:
         httpMethod: "POST"
         contentHandling: "CONVERT_TO_TEXT"
         type: "aws_proxy"
-  /v2/{store_identifier}/common/invoices:
+  /v1/{store_identifier}/stockblock:
     get:
-      description: "Retrieves information about invoices"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "created_at"
-        in: "query"
-        required: true
-        type: "string"
-      - name: "page"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "pagesize"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "Authorization"
-        in: "header"
-        required: false
-        type: "string"
-      responses:
-        200:
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-        400:
-          description: "400 response"
-        500:
-          description: "500 response"
-        401:
-          description: "401 response"
-        403:
-          description: "403 response"
-        404:
-          description: "404 response"
-        405:
-          description: "405 response"
-        406:
-          description: "406 response"
-      security:
-      - Authorizer: []
-      x-amazon-apigateway-request-validator: "Validate all"
-      x-amazon-apigateway-integration:
-        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
-        responses:
-          default:
-            statusCode: "200"
-        passthroughBehavior: "when_no_match"
-        httpMethod: "POST"
-        contentHandling: "CONVERT_TO_TEXT"
-        type: "aws_proxy"
-  /v2/{store_identifier}/common/shipments:
-    get:
-      description: "Retrieves information about shipments"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "created_at"
-        in: "query"
-        required: true
-        type: "string"
-      - name: "page"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "pagesize"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "Authorization"
-        in: "header"
-        required: false
-        type: "string"
-      responses:
-        200:
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-        400:
-          description: "400 response"
-        500:
-          description: "500 response"
-        401:
-          description: "401 response"
-        403:
-          description: "403 response"
-        404:
-          description: "404 response"
-        405:
-          description: "405 response"
-        406:
-          description: "406 response"
-      security:
-      - Authorizer: []
-      x-amazon-apigateway-request-validator: "Validate all"
-      x-amazon-apigateway-integration:
-        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
-        responses:
-          default:
-            statusCode: "200"
-        passthroughBehavior: "when_no_match"
-        httpMethod: "POST"
-        contentHandling: "CONVERT_TO_TEXT"
-        type: "aws_proxy"
-  /v2/{store_identifier}/stockblock:
-    get:
-      description: "Interface to retrieve the stock items to be blocked by date"
       produces:
       - "application/json"
       parameters:
@@ -1502,10 +986,6 @@ paths:
         in: "query"
         required: false
         type: "string"
-      - name: "Authorization"
-        in: "header"
-        required: true
-        type: "string"
       responses:
         200:
           description: "200 response"
@@ -1526,7 +1006,7 @@ paths:
         406:
           description: "406 response"
       security:
-      - Authorizer: []
+      - AuthorizerV1: []
       x-amazon-apigateway-request-validator: "Validate all"
       x-amazon-apigateway-integration:
         uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
@@ -1537,9 +1017,8 @@ paths:
         httpMethod: "POST"
         contentHandling: "CONVERT_TO_TEXT"
         type: "aws_proxy"
-  /v2/{store_identifier}/stockunblock:
+  /v1/{store_identifier}/stockunblock:
     get:
-      description: "Interface to retrieve the stock items to be unblocked by date"
       produces:
       - "application/json"
       parameters:
@@ -1552,12 +1031,10 @@ paths:
         required: false
         type: "string"
       - name: "date"
-        description: "Daily products to release"
         in: "query"
         required: true
         type: "string"
       - name: "Authorization"
-        description: "Access token for authorization"
         in: "header"
         required: false
         type: "string"
@@ -1581,7 +1058,7 @@ paths:
         406:
           description: "406 response"
       security:
-      - Authorizer: []
+      - AuthorizerV1: []
       x-amazon-apigateway-request-validator: "Validate all"
       x-amazon-apigateway-integration:
         uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
@@ -1593,13 +1070,13 @@ paths:
         contentHandling: "CONVERT_TO_TEXT"
         type: "aws_proxy"
 securityDefinitions:
-  Authorizer:
+  AuthorizerV1:
     type: "apiKey"
     name: "Authorization"
     in: "header"
     x-amazon-apigateway-authtype: "custom"
     x-amazon-apigateway-authorizer:
-      authorizerUri: "${aws-lambda-arn-template}:${name-lambda-authorize}-${stage}/invocations"
+      authorizerUri: "${aws-lambda-arn-template}:${name-lambda-mag2-auth}-${stage}/invocations"
       authorizerResultTtlInSeconds: 0
       type: "token"
 definitions:
@@ -1612,24 +1089,409 @@ definitions:
       message:
         type: "string"
     title: "Error Schema"
-  UserCredentials:
-    type: "object"
-    title: "User credentials for login"
-    required:
-    - "key"
-    - "secret"
+x-amazon-apigateway-documentation:
+  version: "V1.0"
+  createdDate: "2019-01-14T11:19:39Z"
+  documentationParts:
+  - location:
+      type: "METHOD"
+      path: "/v1/{store_identifier}/invoices"
+      method: "GET"
     properties:
-      key:
-        type: "string"
-      secret:
-        type: "string"    
+      description: "Retrieves information from Invoices"
+  - location:
+      type: "METHOD"
+      path: "/v1/{store_identifier}/reserve/{cart+}"
+      method: "DELETE"
+    properties:
+      description: "Interface to remove items from the basket"
+  - location:
+      type: "METHOD"
+      path: "/v1/{store_identifier}/reserve/{cart+}"
+      method: "GET"
+    properties:
+      description: "Interface to retrieve basket information"
+  - location:
+      type: "METHOD"
+      path: "/v1/{store_identifier}/reserve/{cart+}"
+      method: "POST"
+    properties:
+      description: "Interface to add items to the basket"
+  - location:
+      type: "METHOD"
+      path: "/v1/{store_identifier}/reserve/{cart+}"
+      method: "PUT"
+    properties:
+      description: "Interface to confirm order creation from current basket "
+  - location:
+      type: "METHOD"
+      path: "/v1/{store_identifier}/reserve"
+      method: "POST"
+    properties:
+      description: "Interface to create a guest basket"
+  - location:
+      type: "METHOD"
+      path: "/v1/{store_identifier}/reserve"
+      method: "PUT"
+    properties:
+      description: "Interface that creates an order"
+  - location:
+      type: "METHOD"
+      path: "/{store_identifier}/invoices"
+      method: "GET"
+    properties:
+      description: "List of invoices issued per date \nUsed only in online payment\
+        \ processes (Emporium)."
+  - location:
+      type: "METHOD"
+      path: "/{store_identifier}/order/{id}/invoice"
+      method: "POST"
+    properties:
+      description: "Place invoicing action. Used by PoS for payment post"
+  - location:
+      type: "METHOD"
+      path: "/{store_identifier}/order/{id}/ship"
+      method: "POST"
+    properties:
+      description: "Place shipping/picking action. Used by warehouse or store staff\
+        \ for picking register"
+  - location:
+      type: "METHOD"
+      path: "/{store_identifier}/orders/{id}/cancel"
+      method: "POST"
+    properties:
+      description: "Cancel an order if it is impossible to serve. No body is needed"
+  - location:
+      type: "METHOD"
+      path: "/{store_identifier}/orders/{id}/comments"
+      method: "POST"
+    properties:
+      description: "Add a comment to order history and change status"
+  - location:
+      type: "METHOD"
+      path: "/{store_identifier}/orders"
+      method: "GET"
+    properties:
+      description: "List orders by date, status or store"
+  - location:
+      type: "METHOD"
+      path: "/{store_identifier}/stockblokade"
+      method: "GET"
+    properties:
+      description: "Method to get the store orders to block along with theirs products\
+        \ qties"
+  - location:
+      type: "PATH_PARAMETER"
+      path: "/{store_identifier}/order/{id}/ship"
+      method: "POST"
+      name: "id"
+    properties:
+      description: "Order Id to be updated"
+  - location:
+      type: "PATH_PARAMETER"
+      path: "/{store_identifier}/orders/{id}/cancel"
+      method: "POST"
+      name: "id"
+    properties:
+      description: "Order Id retrieved from order listing"
+  - location:
+      type: "PATH_PARAMETER"
+      path: "/{store_identifier}/order/{id}/ship"
+      method: "POST"
+      name: "store_identifier"
+    properties:
+      description: "store_identifier name"
+  - location:
+      type: "QUERY_PARAMETER"
+      path: "/{store_identifier}/invoices"
+      method: "GET"
+      name: "created_at"
+    properties:
+      description: "Query filter by date of payment"
+  - location:
+      type: "QUERY_PARAMETER"
+      path: "/{store_identifier}/orders"
+      method: "GET"
+      name: "created_at"
+    properties:
+      description: "Query filter orders by date"
+  - location:
+      type: "QUERY_PARAMETER"
+      path: "/{store_identifier}/stockunblock"
+      method: "GET"
+      name: "date"
+    properties:
+      description: "Daily products to release"
+  - location:
+      type: "QUERY_PARAMETER"
+      path: "/{store_identifier}/invoices"
+      method: "GET"
+      name: "page"
+    properties:
+      description: "Query page number"
+  - location:
+      type: "QUERY_PARAMETER"
+      path: "/{store_identifier}/orders"
+      method: "GET"
+      name: "page"
+    properties:
+      description: "Query filter page"
+  - location:
+      type: "QUERY_PARAMETER"
+      path: "/{store_identifier}/stockblokade"
+      method: "GET"
+      name: "page"
+    properties:
+      description: "Query filter page"
+  - location:
+      type: "QUERY_PARAMETER"
+      path: "/{store_identifier}/invoices"
+      method: "GET"
+      name: "pagesize"
+    properties:
+      description: "Query page size. Default value 10"
+  - location:
+      type: "QUERY_PARAMETER"
+      path: "/{store_identifier}/orders"
+      method: "GET"
+      name: "pagesize"
+    properties:
+      description: "Query filter page size"
+  - location:
+      type: "QUERY_PARAMETER"
+      path: "/{store_identifier}/stockblokade"
+      method: "GET"
+      name: "pagesize"
+    properties:
+      description: "Query filter page size"
+  - location:
+      type: "QUERY_PARAMETER"
+      path: "/{store_identifier}/orders"
+      method: "GET"
+      name: "status"
+    properties:
+      description: "Query filter orders by status"
+  - location:
+      type: "QUERY_PARAMETER"
+      path: "/{store_identifier}/stockblokade"
+      method: "GET"
+      name: "status"
+    properties:
+      description: "Should always be waiting_for_blokade"
+  - location:
+      type: "QUERY_PARAMETER"
+      path: "/{store_identifier}/orders"
+      method: "GET"
+      name: "store"
+    properties:
+      description: "Query filter orders by store"
+  - location:
+      type: "REQUEST_BODY"
+      path: "/{store_identifier}/order/{id}/invoice"
+      method: "POST"
+    properties:
+      description: "Example:\r\n {\r\n  \"description\": \"Example:\r\n {\r\n  \"\
+        items\": [\r\n    {\r\n      \"order_item_id\": 0, //order item id\r\n   \
+        \   \"qty\": 0 //item quantities invoiced\r\n    }\r\n  ],\r\n  \"notify\"\
+        : true, //notify to customer flag\r\n  \"appendComment\": true, //add comment\
+        \ to invoice entity\r\n  \"comment\": {\r\n    \"comment\": \"string\", //comment\
+        \ text\r\n  }\r\n}\"\r\n}"
+  - location:
+      type: "REQUEST_BODY"
+      path: "/{store_identifier}/order/{id}/ship"
+      method: "POST"
+    properties:
+      description: "Example: \r\n {\r\n  \"items\": [\r\n    {\r\n      \"order_item_id\"\
+        : 0, //order item id, not SKU\r\n      \"qty\": 0 //qty to be marked as shipped\r\
+        \n    }\r\n  ],\r\n  \"notify\": true, //notify to customer flag\r\n  \"appendComment\"\
+        : true, //append comment to shipment flag\r\n  \"comment\": {\r\n    \"comment\"\
+        : \"string\", //comment text\r\n  }\r\n}"
+  - location:
+      type: "REQUEST_BODY"
+      path: "/{store_identifier}/orders/{id}/cancel"
+      method: "POST"
+    properties:
+      description: "Should be empty"
+  - location:
+      type: "REQUEST_BODY"
+      path: "/{store_identifier}/orders/{id}/comments"
+      method: "POST"
+    properties:
+      description: "Example:\r\n{\r\n  \"statusHistory\": {\r\n    \"comment\": \"\
+        string\",\r\n    \"entity_id\": 0,  //Order identifier\r\n    \"is_customer_notified\"\
+        : 0,\r\n    \"is_visible_on_front\": 0,\r\n    \"status\": \"string\" //Can\
+        \ be one of this [wh_processing|ready_to_collect|shipped]\r\n  }\r\n}"
+  - location:
+      type: "REQUEST_HEADER"
+      path: "/{store_identifier}/invoices"
+      method: "GET"
+      name: "Authorization"
+    properties:
+      description: "Access token for authorization"
+  - location:
+      type: "REQUEST_HEADER"
+      path: "/{store_identifier}/order/{id}/invoice"
+      method: "POST"
+      name: "Authorization"
+    properties:
+      description: "Access token for authorization"
+  - location:
+      type: "REQUEST_HEADER"
+      path: "/{store_identifier}/order/{id}/ship"
+      method: "POST"
+      name: "Authorization"
+    properties:
+      description: "Access token for authorization"
+  - location:
+      type: "REQUEST_HEADER"
+      path: "/{store_identifier}/orders/{id}/cancel"
+      method: "POST"
+      name: "Authorization"
+    properties:
+      description: "Access token for authorization"
+  - location:
+      type: "REQUEST_HEADER"
+      path: "/{store_identifier}/orders/{id}/comments"
+      method: "POST"
+      name: "Authorization"
+    properties:
+      description: "Access token for authorization"
+  - location:
+      type: "REQUEST_HEADER"
+      path: "/{store_identifier}/orders"
+      method: "GET"
+      name: "Authorization"
+    properties:
+      description: "Access token for authorization"
+  - location:
+      type: "REQUEST_HEADER"
+      path: "/{store_identifier}/stockblokade"
+      method: "GET"
+      name: "Authorization"
+    properties:
+      description: "Access token for authorization"
+  - location:
+      type: "REQUEST_HEADER"
+      path: "/{store_identifier}/stockunblock"
+      method: "GET"
+      name: "Authorization"
+    properties:
+      description: "Access token for authorization"
+  - location:
+      type: "RESOURCE"
+    properties:
+      description: "API for Reserve & Collect handling"
+  - location:
+      type: "RESOURCE"
+      path: "/v1/{store_identifier}/creditmemos"
+    properties:
+      description: "After a customer places and pays for an order and an invoice has\
+        \ been issued, the merchant can create a credit memo to refund all or part\
+        \ of the amount paid for any returned or undelivered items. The memo restores\
+        \ funds to the customer account so that the customer can make future purchases."
+  - location:
+      type: "RESOURCE"
+      path: "/v1/{store_identifier}/invoices"
+    properties:
+      description: "An invoice is a record of the receipt of payment for an order."
+  - location:
+      type: "RESOURCE"
+      path: "/v1/{store_identifier}/order"
+    properties:
+      description: "An order is a document that a web store issues to a customer.\
+        \ Magento generates a sales order that lists the product items, billing and\
+        \ shipping addresses, and shipping and payment methods."
+  - location:
+      type: "RESOURCE"
+      path: "/v1/{store_identifier}/orders"
+    properties:
+      description: "An order is a document that a web store issues to a customer.\
+        \ Magento generates a sales order that lists the product items, billing and\
+        \ shipping addresses, and shipping and payment methods."
+  - location:
+      type: "RESOURCE"
+      path: "/v1/{store_identifier}/pim/categories/{categoryid+}"
+    properties:
+      description: "Interface to retrieves one category information"
+  - location:
+      type: "RESOURCE"
+      path: "/v1/{store_identifier}/pim/categories"
+    properties:
+      description: "Interface to retrieves category collection information"
+  - location:
+      type: "RESOURCE"
+      path: "/v1/{store_identifier}/pim/products/{productid+}"
+    properties:
+      description: "Interface to retrieves one product information"
+  - location:
+      type: "RESOURCE"
+      path: "/v1/{store_identifier}/pim/products"
+    properties:
+      description: "Interface to retrieves product collections information"
+  - location:
+      type: "RESOURCE"
+      path: "/v1/{store_identifier}/pim"
+    properties:
+      description: "Interface to retrieves product collections and category information"
+  - location:
+      type: "RESOURCE"
+      path: "/v1/{store_identifier}/reserve"
+    properties:
+      description: "Interface to handle orders"
+  - location:
+      type: "RESOURCE"
+      path: "/v1/{store_identifier}/stockblock"
+    properties:
+      description: "Interface to retrieve the stock items to be blocked by date"
+  - location:
+      type: "RESOURCE"
+      path: "/v1/{store_identifier}/stockunblock"
+    properties:
+      description: "Interface to retrieve the stock items to be unblocked by date"
+  - location:
+      type: "RESOURCE"
+      path: "/{store_identifier}/invoices"
+    properties:
+      description: "Access to invoices issued. Needed for bank reconciliation"
+  - location:
+      type: "RESOURCE"
+      path: "/{store_identifier}/order/{id}/invoice"
+    properties:
+      description: "Access to order invoicing related actions"
+  - location:
+      type: "RESOURCE"
+      path: "/{store_identifier}/order/{id}/ship"
+    properties:
+      description: "Access to order shipping related actions"
+  - location:
+      type: "RESOURCE"
+      path: "/{store_identifier}/order"
+    properties:
+      description: "Access to order update. Needed for order picking and invoicing"
+  - location:
+      type: "RESOURCE"
+      path: "/{store_identifier}/orders/{id}/cancel"
+    properties:
+      description: "Cancel an order if it is impossible to serve"
+  - location:
+      type: "RESOURCE"
+      path: "/{store_identifier}/orders"
+    properties:
+      description: "Access to orders. Needed for order query and status update"
+  - location:
+      type: "RESOURCE"
+      path: "/{store_identifier}/stockunblock"
+    properties:
+      description: "Method to get the products to unblock from a given date"
+  - location:
+      type: "RESOURCE"
+      path: "/{store_identifier}"
+    properties:
+      description: "Access to site operations"
 x-amazon-apigateway-request-validators:
   Validate query string parameters and headers:
     validateRequestParameters: true
     validateRequestBody: false
-  Validate body:
-    validateRequestParameters: false
-    validateRequestBody: true
   Validate all:
     validateRequestParameters: true
     validateRequestBody: true
