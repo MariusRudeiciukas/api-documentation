@@ -2,7 +2,7 @@
 swagger: "2.0"
 info:
   version: "2019-01-14T12:20:42Z"
-  title: "Reserve & Collect (sls)"
+  title: "Reserve & Collect (sls) - V1 Marius Test"
   description: API for Reserve & Collect handling
 host: "api.dufry.cloud"
 basePath: "/u"
