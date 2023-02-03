@@ -1,868 +1,18 @@
 ---
 swagger: "2.0"
 info:
-  description: "API for Reserve & Collect handling"
   version: "2019-01-14T12:20:42Z"
   title: "Reserve & Collect (sls)"
-host: "hzxdnerlzb.execute-api.eu-west-1.amazonaws.com"
-basePath: "/devbridge"
+  description: API for Reserve & Collect handling
+host: "api.dufry.cloud"
+basePath: "/u"
 schemes:
 - "https"
 paths:
-  /v1/{store_identifier}/creditmemos:
-    get:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "created_at"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "page"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "pagesize"
-        in: "query"
-        required: false
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-      security:
-      - AuthorizerV1: []
-  /v1/{store_identifier}/invoices:
-    get:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "created_at"
-        in: "query"
-        required: true
-        type: "string"
-      - name: "page"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "pagesize"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "Authorization"
-        in: "header"
-        required: false
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-        "400":
-          description: "400 response"
-        "401":
-          description: "401 response"
-        "500":
-          description: "500 response"
-        "403":
-          description: "403 response"
-        "404":
-          description: "404 response"
-        "405":
-          description: "405 response"
-        "406":
-          description: "406 response"
-      security:
-      - AuthorizerV1: []
-  /v1/{store_identifier}/invoices/picked:
-    get:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "created_at"
-        in: "query"
-        required: true
-        type: "string"
-      - name: "page"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "pagesize"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "Authorization"
-        in: "header"
-        required: false
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-        "400":
-          description: "400 response"
-        "401":
-          description: "401 response"
-        "500":
-          description: "500 response"
-        "403":
-          description: "403 response"
-        "404":
-          description: "404 response"
-        "405":
-          description: "405 response"
-        "406":
-          description: "406 response"
-      security:
-      - AuthorizerV1: []
-  /v1/{store_identifier}/order/{id}/invoice:
-    post:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "Authorization"
-        in: "header"
-        required: false
-        type: "string"
-      - name: "id"
-        in: "path"
-        required: true
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-        "400":
-          description: "400 response"
-        "401":
-          description: "401 response"
-        "500":
-          description: "500 response"
-        "403":
-          description: "403 response"
-        "404":
-          description: "404 response"
-        "405":
-          description: "405 response"
-        "406":
-          description: "406 response"
-      security:
-      - AuthorizerV1: []
-  /v1/{store_identifier}/order/{id}/ship:
-    post:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "Authorization"
-        in: "header"
-        required: false
-        type: "string"
-      - name: "id"
-        in: "path"
-        required: true
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-        "400":
-          description: "400 response"
-        "401":
-          description: "401 response"
-        "500":
-          description: "500 response"
-        "403":
-          description: "403 response"
-        "404":
-          description: "404 response"
-        "405":
-          description: "405 response"
-        "406":
-          description: "406 response"
-      security:
-      - AuthorizerV1: []
-  /v1/{store_identifier}/orders:
-    get:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "store"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "created_at"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "operator"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "pagesize"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "status"
-        in: "query"
-        required: true
-        type: "string"
-      - name: "page"
-        in: "query"
-        required: false
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-        "400":
-          description: "400 response"
-        "401":
-          description: "401 response"
-        "500":
-          description: "500 response"
-        "403":
-          description: "403 response"
-        "404":
-          description: "404 response"
-        "405":
-          description: "405 response"
-        "406":
-          description: "406 response"
-      security:
-      - AuthorizerV1: []
-  /v1/{store_identifier}/orders/{id}:
-    get:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "created_at"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "is_external"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "is_entity_id"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "pagesize"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "Authorization"
-        in: "header"
-        required: false
-        type: "string"
-      - name: "page"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "id"
-        in: "path"
-        required: true
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-        "400":
-          description: "400 response"
-        "401":
-          description: "401 response"
-        "500":
-          description: "500 response"
-        "403":
-          description: "403 response"
-        "404":
-          description: "404 response"
-        "405":
-          description: "405 response"
-        "406":
-          description: "406 response"
-      security:
-      - AuthorizerV1: []
-  /v1/{store_identifier}/orders/{id}/cancel:
-    post:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "Authorization"
-        in: "header"
-        required: false
-        type: "string"
-      - name: "id"
-        in: "path"
-        required: true
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-        "400":
-          description: "400 response"
-        "401":
-          description: "401 response"
-        "500":
-          description: "500 response"
-        "403":
-          description: "403 response"
-        "404":
-          description: "404 response"
-        "405":
-          description: "405 response"
-        "406":
-          description: "406 response"
-      security:
-      - AuthorizerV1: []
-  /v1/{store_identifier}/orders/{id}/comments:
-    post:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "Authorization"
-        in: "header"
-        required: false
-        type: "string"
-      - name: "id"
-        in: "path"
-        required: true
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-        "400":
-          description: "400 response"
-        "401":
-          description: "401 response"
-        "500":
-          description: "500 response"
-        "403":
-          description: "403 response"
-        "404":
-          description: "404 response"
-        "405":
-          description: "405 response"
-        "406":
-          description: "406 response"
-      security:
-      - AuthorizerV1: []
-  /v1/{store_identifier}/pim/categories:
-    get:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "updated"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "page"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "pagesize"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "parentid"
-        in: "path"
-        required: false
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-      security:
-      - AuthorizerV1: []
-  /v1/{store_identifier}/pim/categories/{categoryid+}:
-    get:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "categoryid"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-  /v1/{store_identifier}/pim/products:
-    get:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "updated"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "page"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "pagesize"
-        in: "query"
-        required: false
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-      security:
-      - AuthorizerV1: []
-  /v1/{store_identifier}/pim/products/{productid+}:
-    get:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "productid"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-      security:
-      - AuthorizerV1: []
-  /v1/{store_identifier}/promotions:
-    get:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-      security:
-      - AuthorizerV1: []
-  /v1/{store_identifier}/reserve:
-    post:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-      security:
-      - AuthorizerV1: []
-    put:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-      security:
-      - AuthorizerV1: []
-  /v1/{store_identifier}/reserve/{cart+}:
-    get:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "cart"
-        in: "path"
-        required: true
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-      security:
-      - AuthorizerV1: []
-    post:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "cart"
-        in: "path"
-        required: true
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-      security:
-      - AuthorizerV1: []
-    put:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "cart"
-        in: "path"
-        required: true
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-      security:
-      - AuthorizerV1: []
-    delete:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "cart"
-        in: "path"
-        required: true
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-      security:
-      - AuthorizerV1: []
-  /v1/{store_identifier}/sap/invoices:
-    get:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "created_at"
-        in: "query"
-        required: true
-        type: "string"
-      - name: "page"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "pagesize"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "Authorization"
-        in: "header"
-        required: false
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-        "400":
-          description: "400 response"
-        "401":
-          description: "401 response"
-        "500":
-          description: "500 response"
-        "403":
-          description: "403 response"
-        "404":
-          description: "404 response"
-        "405":
-          description: "405 response"
-        "406":
-          description: "406 response"
-      security:
-      - AuthorizerV1: []
-  /v1/{store_identifier}/shipments:
-    get:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "created_at"
-        in: "query"
-        required: true
-        type: "string"
-      - name: "page"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "pagesize"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "Authorization"
-        in: "header"
-        required: false
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-        "400":
-          description: "400 response"
-        "401":
-          description: "401 response"
-        "500":
-          description: "500 response"
-        "403":
-          description: "403 response"
-        "404":
-          description: "404 response"
-        "405":
-          description: "405 response"
-        "406":
-          description: "406 response"
-      security:
-      - AuthorizerV1: []
-  /v1/{store_identifier}/stockblock:
-    get:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "date"
-        in: "query"
-        required: true
-        type: "string"
-      - name: "page"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "pagesize"
-        in: "query"
-        required: false
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-        "400":
-          description: "400 response"
-        "401":
-          description: "401 response"
-        "500":
-          description: "500 response"
-        "403":
-          description: "403 response"
-        "404":
-          description: "404 response"
-        "405":
-          description: "405 response"
-        "406":
-          description: "406 response"
-      security:
-      - AuthorizerV1: []
-  /v1/{store_identifier}/stockunblock:
-    get:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "store"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "date"
-        in: "query"
-        required: true
-        type: "string"
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "Authorization"
-        in: "header"
-        required: false
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-        "400":
-          description: "400 response"
-        "401":
-          description: "401 response"
-        "500":
-          description: "500 response"
-        "403":
-          description: "403 response"
-        "404":
-          description: "404 response"
-        "405":
-          description: "405 response"
-        "406":
-          description: "406 response"
-      security:
-      - AuthorizerV1: []
-  /v2/forum/products:
-    get:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "updated"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "page"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "pagesize"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "item_code"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "erp"
-        in: "query"
-        required: false
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-      security:
-      - Authorizer: []
   /v2/login:
-    post:
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "UserCredentials"
-        required: true
-        schema:
-          $ref: "#/definitions/UserCredentials"
-      responses:
-        "200":
-          description: "200 response"
-          headers:
-            Access-Control-Allow-Origin:
-              type: "string"
-        "400":
-          description: "400 response"
-          headers:
-            Access-Control-Allow-Origin:
-              type: "string"
-        "500":
-          description: "500 response"
-          headers:
-            Access-Control-Allow-Origin:
-              type: "string"
-        "401":
-          description: "401 response"
-          headers:
-            Access-Control-Allow-Origin:
-              type: "string"
     options:
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
       responses:
-        "200":
+        200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Empty"
@@ -873,14 +23,100 @@ paths:
               type: "string"
             Access-Control-Allow-Headers:
               type: "string"
-  /v2/pim/categories:
-    get:
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: |
+            { "statusCode": 200 }
+        passthroughBehavior: "when_no_match"
+        type: "mock"
+    post:
+      tags:
+      - "authenticate"
+      description: API to authenticate a user
       consumes:
-      - "application/json"
+        - application/json
       produces:
       - "application/json"
       parameters:
-      - name: "parentid"
+      - in: "body"
+        name: "user"
+        description: "User credentials information"
+        required: false
+        schema:
+          $ref: "#/definitions/UserCredentials"
+      responses:
+        "200":
+          description: "authenticated"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "400":
+          description: "failed"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "401":
+          description: "failed"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "500":
+          description: "failed"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${aws-lambda-arn-template}:${name-lambda-login}-${stage}/invocations"
+        passthroughBehavior: "when_no_match"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          "400.*":
+            statusCode: "400"
+            responseTemplates:
+              "application/json": |
+                ${response-error-mapping}
+          "401.*":
+            statusCode: "401"
+            responseTemplates:
+              "application/json": |
+                ${response-error-mapping}
+          "500.*":
+            statusCode: "500"
+            responseTemplates:
+              "application/json": |
+                ${response-error-mapping}
+        httpMethod: "POST"
+        type: "aws"
+  /v2/{store_identifier}/creditmemos:
+    get:
+      description: |
+        After a customer places and pays for an order and an invoice has
+        been issued, the merchant can create a credit memo to refund all or part
+        of the amount paid for any returned or undelivered items. The memo restores
+        funds to the customer account so that the customer can make future purchases.
+      produces:
+      - "application/json"
+      parameters:
+      - name: "store_identifier"
+        in: "path"
+        required: false
+        type: "string"
+      - name: "created_at"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "page"
         in: "query"
         required: false
         type: "string"
@@ -888,21 +124,579 @@ paths:
         in: "query"
         required: false
         type: "string"
-      - name: "startkey"
-        in: "query"
-        required: false
-        type: "string"
       responses:
-        "200":
+        200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Empty"
       security:
       - Authorizer: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
+  /v2/{store_identifier}/invoices:
+    get:
+      description: |
+        Retrieves information from Invoices
+        An invoice is a record of the receipt of payment for an order.
+      produces:
+      - "application/json"
+      parameters:
+      - name: "store_identifier"
+        description: "Store ID"
+        in: "path"
+        required: false
+        type: "string"
+      - name: "created_at"
+        description: "Query filter by date of payment"
+        in: "query"
+        required: true
+        type: "string"
+      - name: "page"
+        description: "Query page number"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "pagesize"
+        description: "Query page size. Default value 10"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "Authorization"
+        description: "Access token for authorization"
+        in: "header"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+        400:
+          description: "400 response"
+        500:
+          description: "500 response"
+        401:
+          description: "401 response"
+        403:
+          description: "403 response"
+        404:
+          description: "404 response"
+        405:
+          description: "405 response"
+        406:
+          description: "406 response"
+      security:
+      - Authorizer: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
+  /v2/{store_identifier}/shipments:
+    get:
+      description: "Retrieves information from shipments"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "store_identifier"
+        in: "path"
+        required: false
+        type: "string"
+      - name: "created_at"
+        in: "query"
+        required: true
+        type: "string"
+      - name: "page"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "pagesize"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "Authorization"
+        in: "header"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+        400:
+          description: "400 response"
+        500:
+          description: "500 response"
+        401:
+          description: "401 response"
+        403:
+          description: "403 response"
+        404:
+          description: "404 response"
+        405:
+          description: "405 response"
+        406:
+          description: "406 response"
+      security:
+      - Authorizer: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
+  /v2/{store_identifier}/order/{id}/invoice:
+    post:
+      description: |
+        Place invoicing action. Used by PoS for payment post
+        Example: {
+          "items": [ {
+            "order_item_id": 0,    //order item id
+            "qty": 0               //item quantities invoiced
+          } ],
+          "notify": true,          //notify to customer flag
+          "appendComment": true,   //add comment to invoice entity
+          "comment": {
+            "comment": "string",   //comment text
+          }
+        }
+      produces:
+      - "application/json"
+      parameters:
+      - name: "store_identifier"
+        description: "Store ID"
+        in: "path"
+        required: false
+        type: "string"
+      - name: "Authorization"
+        description: "Access token for authorization"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+        400:
+          description: "400 response"
+        500:
+          description: "500 response"
+        401:
+          description: "401 response"
+        403:
+          description: "403 response"
+        404:
+          description: "404 response"
+        405:
+          description: "405 response"
+        406:
+          description: "406 response"
+      security:
+      - Authorizer: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
+  /v2/{store_identifier}/order/{id}/ship:
+    post:
+      description: |
+        Place shipping/picking action. Used by warehouse or store staff
+        for picking register
+        Example: {
+          "items": [ {
+            "order_item_id": 0,    //order item id, not SKU
+            "qty": 0               //qty to be marked as shipped
+          } ],
+          "notify": true,          //notify to customer flag
+          "appendComment": true,   //append comment to shipment flag
+          "comment": {
+            "comment": "string",   //comment text
+          }
+        }
+      produces:
+      - "application/json"
+      parameters:
+      - name: "store_identifier"
+        description: "Store ID"
+        in: "path"
+        required: false
+        type: "string"
+      - name: "Authorization"
+        description: "Access token for authorization"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "id"
+        description: "Order Id to be updated"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+        400:
+          description: "400 response"
+        500:
+          description: "500 response"
+        401:
+          description: "401 response"
+        403:
+          description: "403 response"
+        404:
+          description: "404 response"
+        405:
+          description: "405 response"
+        406:
+          description: "406 response"
+      security:
+      - Authorizer: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
+  /v2/{store_identifier}/orders:
+    get:
+      description: |
+        List orders by date, status or store
+        An order is a document that a web store issues to a customer.
+        Magento generates a sales order that lists the product items, billing and
+        shipping addresses, and shipping and payment methods.
+      produces:
+      - "application/json"
+      parameters:
+      - name: "store"
+        description: "Query filter orders by store"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "created_at"
+        description: "Query filter orders by date"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "pagesize"
+        description: "Query filter page size"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "Authorization"
+        description: "Access token for authorization"
+        in: "header"
+        required: true
+        type: "string"
+      - name: "store_identifier"
+        description: "Store ID"
+        in: "path"
+        required: false
+        type: "string"
+      - name: "status"
+        description: "Query filter orders by status"
+        in: "query"
+        required: true
+        type: "string"
+      - name: "operator"
+        description: "Query filter operator"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "page"
+        description: "Query filter page"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+        400:
+          description: "400 response"
+        500:
+          description: "500 response"
+        401:
+          description: "401 response"
+        403:
+          description: "403 response"
+        404:
+          description: "404 response"
+        405:
+          description: "405 response"
+        406:
+          description: "406 response"
+      security:
+      - Authorizer: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
+  /v2/{store_identifier}/orders/{id}:
+    get:
+      description: |
+        Retrieves information for one order
+      produces:
+      - "application/json"
+      parameters:
+      - name: "store_identifier"
+        description: "Store ID"
+        in: "path"
+        required: false
+        type: "string"
+      - name: "Authorization"
+        description: "Access token for authorization"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "id"
+        description: "Order Id to be request"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+        400:
+          description: "400 response"
+        500:
+          description: "500 response"
+        401:
+          description: "401 response"
+        403:
+          description: "403 response"
+        404:
+          description: "404 response"
+        405:
+          description: "405 response"
+        406:
+          description: "406 response"
+      security:
+      - Authorizer: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
+  /v2/{store_identifier}/orders/{id}/cancel:
+    post:
+      description: "Cancel an order if it is impossible to serve. No body is needed"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "store_identifier"
+        description: "Store ID"
+        in: "path"
+        required: false
+        type: "string"
+      - name: "Authorization"
+        description: "Access token for authorization"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "id"
+        description: "Order Id retrieved from order listing"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+        400:
+          description: "400 response"
+        500:
+          description: "500 response"
+        401:
+          description: "401 response"
+        403:
+          description: "403 response"
+        404:
+          description: "404 response"
+        405:
+          description: "405 response"
+        406:
+          description: "406 response"
+      security:
+      - Authorizer: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
+  /v2/{store_identifier}/orders/{id}/comments:
+    post:
+      description: |
+        Add a comment to order history and change status
+        Example: {
+          "statusHistory": {
+            "comment": "string",
+            "entity_id": 0,              //Order identifier
+            "is_customer_notified": 0,
+            "is_visible_on_front": 0,
+            "status": "string"           //Can be one of this [wh_processing|ready_to_collect|shipped]
+          }
+        }
+      produces:
+      - "application/json"
+      parameters:
+      - name: "store_identifier"
+        description: "Store ID"
+        in: "path"
+        required: false
+        type: "string"
+      - name: "Authorization"
+        description: "Access token for authorization"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+        400:
+          description: "400 response"
+        500:
+          description: "500 response"
+        401:
+          description: "401 response"
+        403:
+          description: "403 response"
+        404:
+          description: "404 response"
+        405:
+          description: "405 response"
+        406:
+          description: "406 response"
+      security:
+      - Authorizer: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
+  /v2/pim/categories:
+    get:
+      description: "Interface to retrieves category collection information"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "parentid"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "startkey"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "pagesize"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+      security:
+      - Authorizer: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${action-dynamodb-arn-template}/Scan"
+        credentials: "${credentials-proxy-dynamodb-readwrite}-${stage}"
+        responses:
+          default:
+            statusCode: "200"
+        requestTemplates:
+          application/json: |
+            {
+              "TableName": "${stage}-${tableName-category}"
+              #if ($input.params('parentid')!='')
+                , "FilterExpression" : "parent = :parent" 
+              #end
+
+              #if ($input.params('parentid')!='')
+                , "ExpressionAttributeValues": {
+                  ":parent": { "S": "$input.params('parentid')" }
+                }
+              #end
+              #if ($input.params('pagesize')!='')
+                , "Limit": $input.params('pagesize')
+              #end
+
+              #if ($input.params('startkey')!='')
+                , "ExclusiveStartKey": { $input.params('startkey') }
+              #end
+            }
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws"
   /v2/pim/categories/{categoryid}:
     get:
-      consumes:
-      - "application/json"
+      description: "Interface to retrieves one category information"
       produces:
       - "application/json"
       parameters:
@@ -915,18 +709,51 @@ paths:
         required: false
         type: "string"
       responses:
-        "200":
+        200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Empty"
       security:
       - Authorizer: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${action-dynamodb-arn-template}/Query"
+        credentials: "${credentials-proxy-dynamodb-readwrite}-${stage}"
+        responses:
+          default:
+            statusCode: "200"
+        requestTemplates:
+          application/json: |
+            {
+                "TableName": "${stage}-${tableName-category}",
+                "KeyConditionExpression": "code = :categoryid",
+                
+                "ExpressionAttributeValues": {
+                    ":categoryid": { "S": "$input.params('categoryid')" }
+                }
+            }
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        cacheNamespace: "e47ooi"
+        cacheKeyParameters:
+        - "method.request.path.categoryid"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws"
   /v2/pim/products:
     get:
+      description: "Interface to retrieves product collections information"
       produces:
       - "application/json"
       parameters:
       - name: "updated"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "erp"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "item_code"
         in: "query"
         required: false
         type: "string"
@@ -938,23 +765,26 @@ paths:
         in: "query"
         required: false
         type: "string"
-      - name: "item_code"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "erp"
-        in: "query"
-        required: false
-        type: "string"
       responses:
-        "200":
+        200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Empty"
       security:
       - Authorizer: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
   /v2/pim/products/{productid+}:
     get:
+      description: "Interface to retrieves one product information"
       produces:
       - "application/json"
       parameters:
@@ -963,134 +793,28 @@ paths:
         required: true
         type: "string"
       responses:
-        "200":
+        200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Empty"
       security:
       - Authorizer: []
-  /v2/{store_identifier}/common/invoices:
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        cacheNamespace: "xfkulm"
+        cacheKeyParameters:
+        - "method.request.path.productid"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
+  /v2/forum/products:
     get:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "created_at"
-        in: "query"
-        required: true
-        type: "string"
-      - name: "page"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "pagesize"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "Authorization"
-        in: "header"
-        required: false
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-        "400":
-          description: "400 response"
-        "401":
-          description: "401 response"
-        "500":
-          description: "500 response"
-        "403":
-          description: "403 response"
-        "404":
-          description: "404 response"
-        "405":
-          description: "405 response"
-        "406":
-          description: "406 response"
-      security:
-      - Authorizer: []
-  /v2/{store_identifier}/common/shipments:
-    get:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "created_at"
-        in: "query"
-        required: true
-        type: "string"
-      - name: "page"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "pagesize"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "Authorization"
-        in: "header"
-        required: false
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-        "400":
-          description: "400 response"
-        "401":
-          description: "401 response"
-        "500":
-          description: "500 response"
-        "403":
-          description: "403 response"
-        "404":
-          description: "404 response"
-        "405":
-          description: "405 response"
-        "406":
-          description: "406 response"
-      security:
-      - Authorizer: []
-  /v2/{store_identifier}/creditmemos:
-    get:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "created_at"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "page"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "pagesize"
-        in: "query"
-        required: false
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-      security:
-      - Authorizer: []
-  /v2/{store_identifier}/forum/products:
-    get:
+      description: "Interface to retrieves product collections information for forum"
       produces:
       - "application/json"
       parameters:
@@ -1098,15 +822,7 @@ paths:
         in: "query"
         required: false
         type: "string"
-      - name: "page"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "pagesize"
+      - name: "erp"
         in: "query"
         required: false
         type: "string"
@@ -1114,19 +830,164 @@ paths:
         in: "query"
         required: false
         type: "string"
-      - name: "erp"
+      - name: "page"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "pagesize"
         in: "query"
         required: false
         type: "string"
       responses:
-        "200":
+        200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Empty"
       security:
       - Authorizer: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
+  /v2/{store_identifier}/pim/categories:
+    get:
+      description: "Interface to retrieves category collection information"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "updated"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "store_identifier"
+        in: "path"
+        required: false
+        type: "string"
+      - name: "page"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "pagesize"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+      security:
+      - Authorizer: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${action-dynamodb-arn-template}/Scan"      
+        credentials: "${credentials-proxy-dynamodb-readwrite}-${stage}"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws"
+  /v2/{store_identifier}/pim/categories/{categoryid+}:
+    get:
+      description: "Interface to retrieves one category information"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "categoryid"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "store_identifier"
+        in: "path"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+      security:
+      - Authorizer: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${action-dynamodb-arn-template}/Scan"
+        credentials: "${credentials-proxy-dynamodb-readwrite}-${stage}"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        cacheNamespace: "e47ooi"
+        cacheKeyParameters:
+        - "method.request.path.categoryid"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws"
+  /v2/{store_identifier}/pim/products:
+    get:
+      description: "Interface to retrieves product collections information"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "updated"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "store_identifier"
+        in: "path"
+        required: false
+        type: "string"
+      - name: "erp"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "item_code"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "page"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "pagesize"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "pagination_type"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "search_after"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+      security:
+      - Authorizer: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
   /v2/{store_identifier}/forum/url:
     get:
+      description: "Interface to retrieves url information for product"
       produces:
       - "application/json"
       parameters:
@@ -1139,446 +1000,25 @@ paths:
         required: false
         type: "string"
       responses:
-        "200":
+        200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Empty"
       security:
       - Authorizer: []
-  /v2/{store_identifier}/invoices:
-    get:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "created_at"
-        in: "query"
-        required: true
-        type: "string"
-      - name: "page"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "pagesize"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "Authorization"
-        in: "header"
-        required: false
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-        "400":
-          description: "400 response"
-        "401":
-          description: "401 response"
-        "500":
-          description: "500 response"
-        "403":
-          description: "403 response"
-        "404":
-          description: "404 response"
-        "405":
-          description: "405 response"
-        "406":
-          description: "406 response"
-      security:
-      - Authorizer: []
-  /v2/{store_identifier}/invoices/picked:
-    get:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "created_at"
-        in: "query"
-        required: true
-        type: "string"
-      - name: "page"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "pagesize"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "Authorization"
-        in: "header"
-        required: false
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-        "400":
-          description: "400 response"
-        "401":
-          description: "401 response"
-        "500":
-          description: "500 response"
-        "403":
-          description: "403 response"
-        "404":
-          description: "404 response"
-        "405":
-          description: "405 response"
-        "406":
-          description: "406 response"
-      security:
-      - Authorizer: []
-  /v2/{store_identifier}/order/{id}/invoice:
-    post:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "Authorization"
-        in: "header"
-        required: false
-        type: "string"
-      - name: "id"
-        in: "path"
-        required: true
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-        "400":
-          description: "400 response"
-        "401":
-          description: "401 response"
-        "500":
-          description: "500 response"
-        "403":
-          description: "403 response"
-        "404":
-          description: "404 response"
-        "405":
-          description: "405 response"
-        "406":
-          description: "406 response"
-      security:
-      - Authorizer: []
-  /v2/{store_identifier}/order/{id}/ship:
-    post:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "Authorization"
-        in: "header"
-        required: false
-        type: "string"
-      - name: "id"
-        in: "path"
-        required: true
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-        "400":
-          description: "400 response"
-        "401":
-          description: "401 response"
-        "500":
-          description: "500 response"
-        "403":
-          description: "403 response"
-        "404":
-          description: "404 response"
-        "405":
-          description: "405 response"
-        "406":
-          description: "406 response"
-      security:
-      - Authorizer: []
-  /v2/{store_identifier}/orders:
-    get:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "store"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "created_at"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "operator"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "pagesize"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "Authorization"
-        in: "header"
-        required: true
-        type: "string"
-      - name: "status"
-        in: "query"
-        required: true
-        type: "string"
-      - name: "page"
-        in: "query"
-        required: false
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-        "400":
-          description: "400 response"
-        "401":
-          description: "401 response"
-        "500":
-          description: "500 response"
-        "403":
-          description: "403 response"
-        "404":
-          description: "404 response"
-        "405":
-          description: "405 response"
-        "406":
-          description: "406 response"
-      security:
-      - Authorizer: []
-  /v2/{store_identifier}/orders/{id}:
-    get:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "Authorization"
-        in: "header"
-        required: false
-        type: "string"
-      - name: "id"
-        in: "path"
-        required: true
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-        "400":
-          description: "400 response"
-        "401":
-          description: "401 response"
-        "500":
-          description: "500 response"
-        "403":
-          description: "403 response"
-        "404":
-          description: "404 response"
-        "405":
-          description: "405 response"
-        "406":
-          description: "406 response"
-      security:
-      - Authorizer: []
-  /v2/{store_identifier}/orders/{id}/cancel:
-    post:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "Authorization"
-        in: "header"
-        required: false
-        type: "string"
-      - name: "id"
-        in: "path"
-        required: true
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-        "400":
-          description: "400 response"
-        "401":
-          description: "401 response"
-        "500":
-          description: "500 response"
-        "403":
-          description: "403 response"
-        "404":
-          description: "404 response"
-        "405":
-          description: "405 response"
-        "406":
-          description: "406 response"
-      security:
-      - Authorizer: []
-  /v2/{store_identifier}/orders/{id}/comments:
-    post:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "Authorization"
-        in: "header"
-        required: false
-        type: "string"
-      - name: "id"
-        in: "path"
-        required: true
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-        "400":
-          description: "400 response"
-        "401":
-          description: "401 response"
-        "500":
-          description: "500 response"
-        "403":
-          description: "403 response"
-        "404":
-          description: "404 response"
-        "405":
-          description: "405 response"
-        "406":
-          description: "406 response"
-      security:
-      - Authorizer: []
-  /v2/{store_identifier}/pim/categories:
-    get:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "updated"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "page"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "pagesize"
-        in: "query"
-        required: false
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-      security:
-      - Authorizer: []
-  /v2/{store_identifier}/pim/categories/{categoryid+}:
-    get:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "categoryid"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-      security:
-      - Authorizer: []
-  /v2/{store_identifier}/pim/products:
-    get:
-      produces:
-      - "application/json"
-      parameters:
-      - name: "updated"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "search_after"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
-      - name: "pagesize"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "item_code"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "pagination_type"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "page"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "erp"
-        in: "query"
-        required: false
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-      security:
-      - Authorizer: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
   /v2/{store_identifier}/pim/products/{productid+}:
     get:
+      description: "Interface to retrieves one product information"
       produces:
       - "application/json"
       parameters:
@@ -1591,12 +1031,72 @@ paths:
         required: false
         type: "string"
       responses:
-        "200":
+        200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Empty"
       security:
       - Authorizer: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        cacheNamespace: "xfkulm"
+        cacheKeyParameters:
+        - "method.request.path.productid"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
+  /v2/{store_identifier}/forum/products:
+    get:
+      description: "Interface to retrieves product collections information for forum"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "updated"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "store_identifier"
+        in: "path"
+        required: false
+        type: "string"
+      - name: "erp"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "item_code"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "page"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "pagesize"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+      security:
+      - Authorizer: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
   /v2/{store_identifier}/promotions:
     get:
       produces:
@@ -1607,14 +1107,25 @@ paths:
         required: false
         type: "string"
       responses:
-        "200":
+        200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Empty"
       security:
       - Authorizer: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
   /v2/{store_identifier}/reserve:
     post:
+      description: "Interface to create a guest basket"
       produces:
       - "application/json"
       parameters:
@@ -1623,13 +1134,24 @@ paths:
         required: false
         type: "string"
       responses:
-        "200":
+        200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Empty"
       security:
       - Authorizer: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
     put:
+      description: "Interface that creates an order"
       produces:
       - "application/json"
       parameters:
@@ -1638,71 +1160,158 @@ paths:
         required: false
         type: "string"
       responses:
-        "200":
+        200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Empty"
       security:
       - Authorizer: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
   /v2/{store_identifier}/reserve/{cart+}:
     get:
+      description: "Interface to retrieve basket information"
       produces:
       - "application/json"
       parameters:
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
       - name: "cart"
         in: "path"
         required: true
         type: "string"
+      - name: "store_identifier"
+        in: "path"
+        required: false
+        type: "string"
       responses:
-        "200":
+        200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Empty"
       security:
       - Authorizer: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        cacheNamespace: "gn02qp"
+        cacheKeyParameters:
+        - "method.request.path.cart"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
     post:
+      description: "Interface to add items to the basket"
       produces:
       - "application/json"
       parameters:
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
       - name: "cart"
         in: "path"
         required: true
         type: "string"
+      - name: "store_identifier"
+        in: "path"
+        required: false
+        type: "string"
       responses:
-        "200":
+        200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Empty"
       security:
       - Authorizer: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        cacheNamespace: "gn02qp"
+        cacheKeyParameters:
+        - "method.request.path.cart"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
     put:
+      description: "Interface to confirm order creation from current basket "
       produces:
       - "application/json"
       parameters:
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
       - name: "cart"
         in: "path"
         required: true
         type: "string"
+      - name: "store_identifier"
+        in: "path"
+        required: false
+        type: "string"
       responses:
-        "200":
+        200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Empty"
       security:
       - Authorizer: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        cacheNamespace: "gn02qp"
+        cacheKeyParameters:
+        - "method.request.path.cart"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
     delete:
+      description: "Interface to remove items from the basket"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "cart"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "store_identifier"
+        in: "path"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+      security:
+      - Authorizer: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        cacheNamespace: "gn02qp"
+        cacheKeyParameters:
+        - "method.request.path.cart"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
+  /v2/{store_identifier}/invoices/picked:
+    get:
+      description: "Retrieves information from picked orders"
       produces:
       - "application/json"
       parameters:
@@ -1710,22 +1319,6 @@ paths:
         in: "path"
         required: false
         type: "string"
-      - name: "cart"
-        in: "path"
-        required: true
-        type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Empty"
-      security:
-      - Authorizer: []
-  /v2/{store_identifier}/shipments:
-    get:
-      produces:
-      - "application/json"
-      parameters:
       - name: "created_at"
         in: "query"
         required: true
@@ -1734,8 +1327,61 @@ paths:
         in: "query"
         required: false
         type: "string"
+      - name: "pagesize"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "Authorization"
+        in: "header"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+        400:
+          description: "400 response"
+        500:
+          description: "500 response"
+        401:
+          description: "401 response"
+        403:
+          description: "403 response"
+        404:
+          description: "404 response"
+        405:
+          description: "405 response"
+        406:
+          description: "406 response"
+      security:
+      - Authorizer: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
+  /v2/{store_identifier}/common/invoices:
+    get:
+      description: "Retrieves information about invoices"
+      produces:
+      - "application/json"
+      parameters:
       - name: "store_identifier"
         in: "path"
+        required: false
+        type: "string"
+      - name: "created_at"
+        in: "query"
+        required: true
+        type: "string"
+      - name: "page"
+        in: "query"
         required: false
         type: "string"
       - name: "pagesize"
@@ -1747,31 +1393,103 @@ paths:
         required: false
         type: "string"
       responses:
-        "200":
+        200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Empty"
-        "400":
+        400:
           description: "400 response"
-        "401":
-          description: "401 response"
-        "500":
+        500:
           description: "500 response"
-        "403":
+        401:
+          description: "401 response"
+        403:
           description: "403 response"
-        "404":
+        404:
           description: "404 response"
-        "405":
+        405:
           description: "405 response"
-        "406":
+        406:
           description: "406 response"
       security:
       - Authorizer: []
-  /v2/{store_identifier}/stockblock:
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
+  /v2/{store_identifier}/common/shipments:
     get:
+      description: "Retrieves information about shipments"
       produces:
       - "application/json"
       parameters:
+      - name: "store_identifier"
+        in: "path"
+        required: false
+        type: "string"
+      - name: "created_at"
+        in: "query"
+        required: true
+        type: "string"
+      - name: "page"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "pagesize"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "Authorization"
+        in: "header"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+        400:
+          description: "400 response"
+        500:
+          description: "500 response"
+        401:
+          description: "401 response"
+        403:
+          description: "403 response"
+        404:
+          description: "404 response"
+        405:
+          description: "405 response"
+        406:
+          description: "406 response"
+      security:
+      - Authorizer: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
+  /v2/{store_identifier}/stockblock:
+    get:
+      description: "Interface to retrieve the stock items to be blocked by date"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "store_identifier"
+        in: "path"
+        required: false
+        type: "string"
       - name: "date"
         in: "query"
         required: true
@@ -1780,10 +1498,6 @@ paths:
         in: "query"
         required: false
         type: "string"
-      - name: "store_identifier"
-        in: "path"
-        required: false
-        type: "string"
       - name: "pagesize"
         in: "query"
         required: false
@@ -1793,28 +1507,39 @@ paths:
         required: true
         type: "string"
       responses:
-        "200":
+        200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Empty"
-        "400":
+        400:
           description: "400 response"
-        "401":
-          description: "401 response"
-        "500":
+        500:
           description: "500 response"
-        "403":
+        401:
+          description: "401 response"
+        403:
           description: "403 response"
-        "404":
+        404:
           description: "404 response"
-        "405":
+        405:
           description: "405 response"
-        "406":
+        406:
           description: "406 response"
       security:
       - Authorizer: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
   /v2/{store_identifier}/stockunblock:
     get:
+      description: "Interface to retrieve the stock items to be unblocked by date"
       produces:
       - "application/json"
       parameters:
@@ -1822,56 +1547,74 @@ paths:
         in: "query"
         required: false
         type: "string"
-      - name: "date"
-        in: "query"
-        required: true
-        type: "string"
       - name: "store_identifier"
         in: "path"
         required: false
         type: "string"
+      - name: "date"
+        description: "Daily products to release"
+        in: "query"
+        required: true
+        type: "string"
       - name: "Authorization"
+        description: "Access token for authorization"
         in: "header"
         required: false
         type: "string"
       responses:
-        "200":
+        200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Empty"
-        "400":
+        400:
           description: "400 response"
-        "401":
-          description: "401 response"
-        "500":
+        500:
           description: "500 response"
-        "403":
+        401:
+          description: "401 response"
+        403:
           description: "403 response"
-        "404":
+        404:
           description: "404 response"
-        "405":
+        405:
           description: "405 response"
-        "406":
+        406:
           description: "406 response"
       security:
       - Authorizer: []
+      x-amazon-apigateway-request-validator: "Validate all"
+      x-amazon-apigateway-integration:
+        uri: "${aws-lambda-arn-template}:${name-lambda-mag2-post}-${stage}/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
 securityDefinitions:
-  AuthorizerV1:
-    type: "apiKey"
-    name: "Authorization"
-    in: "header"
-    x-amazon-apigateway-authtype: "custom"
   Authorizer:
     type: "apiKey"
     name: "Authorization"
     in: "header"
     x-amazon-apigateway-authtype: "custom"
+    x-amazon-apigateway-authorizer:
+      authorizerUri: "${aws-lambda-arn-template}:${name-lambda-authorize}-${stage}/invocations"
+      authorizerResultTtlInSeconds: 0
+      type: "token"
 definitions:
   Empty:
     type: "object"
     title: "Empty Schema"
+  Error:
+    type: "object"
+    properties:
+      message:
+        type: "string"
+    title: "Error Schema"
   UserCredentials:
     type: "object"
+    title: "User credentials for login"
     required:
     - "key"
     - "secret"
@@ -1879,5 +1622,14 @@ definitions:
       key:
         type: "string"
       secret:
-        type: "string"
-    title: "User credentials for login"
+        type: "string"    
+x-amazon-apigateway-request-validators:
+  Validate query string parameters and headers:
+    validateRequestParameters: true
+    validateRequestBody: false
+  Validate body:
+    validateRequestParameters: false
+    validateRequestBody: true
+  Validate all:
+    validateRequestParameters: true
+    validateRequestBody: true
